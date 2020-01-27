@@ -1,0 +1,4 @@
+flask
+configobj
+requests
+python-telegram-bot

@@ -33,7 +33,7 @@ class nCov:
         self.dispatcher.add_handler(CommandHandler('overview', self.overview_handler))
         self.dispatcher.add_handler(CommandHandler('status', self.status_handler))
         self.dispatcher.add_handler(CommandHandler('news', self.news_handler))
-        app.run(debug=True)
+        app.run(host=config["Flask"]["HOST"], port=config["Flask"]["PORT"], debug=True)
 
     def get_overview(self):
         url = "https://3g.dxy.cn/newh5/view/pneumonia"
@@ -82,6 +82,13 @@ class nCov:
         stat = data["dailyPic"]
         return text, cmap, stat
 
+    def reply_news(self):
+        data = self.get_news()
+        text = "🇨🇳武汉肺炎疫情查询\n" \
+               "Powered by 2020 TheWanderingCoel with love❤️\n" \
+               "🎈灵感来源于方糖\n\n"
+        return text, data
+
     def make_text(self, data):
         text = "🇨🇳武汉肺炎疫情查询\n" \
                "Powered by 2020 TheWanderingCoel with love❤️\n" \
@@ -102,6 +109,11 @@ class nCov:
     def news_handler(self, bot, update):
         """ Reply News """
         text = update.message.text
+        text, data = self.reply_news()
+        update.message.reply_text(text)
+        for each in data:
+            text = "*" + each["title"] + "*" + "\n\n" + each["summary"]
+            update.message.reply_text(text, parse_mode='Markdown', quote=False)
 
     def overview_handler(self, bot, update):
         """ Reply Overview """

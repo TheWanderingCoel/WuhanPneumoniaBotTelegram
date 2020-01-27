@@ -108,7 +108,7 @@ class nCov:
             data = self.get_data("rumors")
             update.message.reply_text(self.text)
             for each in data:
-                text = "*" + each["title"] + "*" + "\n\n" + each["summary"]
+                text = "*" + each["title"] + "*" + "\n\n" + each["mainSummary"]
                 update.message.reply_text(text, parse_mode='Markdown', quote=False)
 
 nCov = nCov()

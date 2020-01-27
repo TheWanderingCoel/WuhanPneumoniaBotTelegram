@@ -51,7 +51,7 @@ class nCov:
             reg = r'<script id="getStatisticsService">.+?window.getStatisticsService\s=\s(.+?)\}catch\(e\)\{\}</script>'
         elif category == "news":
             reg = r'<script id="getTimelineService">.+?window.getTimelineService\s=\s(\[.+?\])\}catch\(e\)\{\}</script>'
-        elif category == "distribution":
+        elif category == "status":
             reg = r'<script id="getAreaStat">.+?window.getAreaStat\s=\s(\[.+?\])\}catch\(e\)\{\}</script>'
         elif category == "rumors":
             reg = r'<script id="getIndexRumorList">.+?window.getIndexRumorList\s=\s(\[.+?\])\}catch\(e\)\{\}</script>'

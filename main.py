@@ -75,7 +75,7 @@ class nCov:
     def reply_overview(self):
         data = self.get_data("overview")
         confirmed, suspected, cured, dead = data["confirmedCount"], data["suspectedCount"], data["curedCount"], data["deadCount"]
-        text = self.text + f"确认{confirmed}例，疑似{suspected}\n死亡{dead}例，治愈{cured}例"
+        text = self.text + f"确认{confirmed}例，疑似{suspected}例\n死亡{dead}例，治愈{cured}例"
         cmap = data["imgUrl"]
         stat = data["dailyPic"]
         return text, cmap, stat

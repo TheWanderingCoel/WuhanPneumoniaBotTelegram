@@ -82,6 +82,8 @@ class nCov:
 
     def make_text(self, data):
         text = self.text
+        confirmCount = data["confirmedCount"]
+        text += data["provinceShortName"] + f" 确认{confirmCount}例" + "\n"
         for city in data["cities"]:
             confirmCount = city["confirmedCount"]
             text += city["cityName"] + f" 确认{confirmCount}例" + "\n"

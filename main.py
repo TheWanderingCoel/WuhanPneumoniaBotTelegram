@@ -45,7 +45,7 @@ class nCov:
         app.run(host=config["Flask"]["HOST"], port=config["Flask"]["PORT"], debug=True)
 
     def get_data(self, category):
-        url = "https://3g.dxy.cn/newh5/view/pneumonia"
+        url = "https://ncov.dxy.cn/ncovh5/view/pneumonia"
         resp = requests.get(url).content.decode("utf-8")
         if category == "overview":
             reg = r'<script id="getStatisticsService">.+?window.getStatisticsService\s=\s(.+?)\}catch\(e\)\{\}</script>'
@@ -74,11 +74,11 @@ class nCov:
 
     def reply_overview(self):
         data = self.get_data("overview")
-        confirmed, suspected, cured, dead = data["confirmedCount"], data["suspectedCount"], data["curedCount"], data["deadCount"]
-        text = self.text + f"确认{confirmed}例，疑似{suspected}例\n死亡{dead}例，治愈{cured}例"
+        confirmed, suspected, serious, cured, dead = data["confirmedCount"], data["suspectedCount"], data["seriousCount"], data["curedCount"], data["deadCount"]
+        text = self.text + f"确认{confirmed}例，疑似{suspected}例，严重{serious}例\n死亡{dead}例，治愈{cured}例"
         cmap = data["imgUrl"]
-        stat = data["dailyPic"]
-        return text, cmap, stat
+        pics = data["dailyPics"]
+        return text, cmap, pics
 
     def make_text(self, data):
         text = self.text
@@ -94,10 +94,11 @@ class nCov:
     def message_handler(self, bot, update):
         text = update.message.text
         if "/overview" in text:
-            response, cmap, stat = self.reply_overview()
+            response, cmap, pics = self.reply_overview()
             update.message.reply_text(response)
             update.message.reply_photo(photo=cmap)
-            update.message.reply_photo(photo=stat)
+            for pic in pics:
+                update.message.reply_photo(photo=pic)
         elif "/news" in text:
             data = self.get_data("news")
             update.message.reply_text(self.text)
